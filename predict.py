@@ -19,9 +19,21 @@ classes = ["Alzheimer", "MCI", "Normal"]
 
 # load test image
 image = cv2.imread(r"C:\Mini-Project\Alzheimer_Early_Detection\dataset_combined\Normal\NoImpairment (81).jpg")
+def is_mri(image):
 
+    # check if image is grayscale-like
+    if len(image.shape) == 3:
+        b,g,r = cv2.split(image)
+
+        if np.array_equal(b,g) and np.array_equal(g,r):
+            return True
+
+    return False
 if image is None:
     print("Image not found. Check file path.")
+    exit()
+elif not is_mri(image):
+    print("Error: Invalid input. Please upload a brain MRI image.")
     exit()
 
 image = cv2.resize(image,(224,224))
